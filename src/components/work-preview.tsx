@@ -14,7 +14,7 @@ export function WorkPreview() {
         </h2>
         <div className="mt-12 grid items-start gap-8 md:grid-cols-3">
           {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+            <ProjectCard key={project.slug} project={project} tone="light" />
           ))}
         </div>
       </div>
