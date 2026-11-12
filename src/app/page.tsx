@@ -1,5 +1,6 @@
 import { About } from "@/components/about";
 import { Experience } from "@/components/experience";
+import { Faq } from "@/components/faq";
 import { Hero } from "@/components/hero";
 import { Process } from "@/components/process";
 import { Proof } from "@/components/proof";
@@ -16,6 +17,7 @@ export default function HomePage() {
       <Process />
       <Experience />
       <Proof />
+      <Faq />
     </main>
   );
 }
