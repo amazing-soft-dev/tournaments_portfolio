@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import type { ReactNode } from "react";
+import { SiteShell } from "@/components/site-shell";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           href="https://api.fontshare.com/v2/css?f[]=general-sans@500,600&display=swap"
         />
       </head>
-      <body>{children}</body>
+      <body>
+        <SiteShell>{children}</SiteShell>
+      </body>
     </html>
   );
 }
