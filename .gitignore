@@ -9,8 +9,13 @@
 
 # Node modules and dependency files
 /node_modules/
-/package-lock.json
 /yarn.lock
+
+# Next.js
+/.next/
+/out/
+.vercel
+.env*.local
 
 # Environment files
 /.env
