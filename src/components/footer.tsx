@@ -26,7 +26,8 @@ export function Footer() {
           <ArrowLink href="/#hero">Back top</ArrowLink>
         </div>
       </div>
-      <div className="mx-auto mt-12 max-w-[1200px] overflow-hidden">
+      <p className="mx-auto mt-10 max-w-[1200px] micro text-muted">Copyright © Mark Hammet 2005–2026</p>
+      <div className="mx-auto mt-6 max-w-[1200px] overflow-hidden">
         <p className="display text-[28vw] leading-[0.72] text-ink xl:text-[220px]">Hammet</p>
       </div>
     </footer>

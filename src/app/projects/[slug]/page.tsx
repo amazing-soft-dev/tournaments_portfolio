@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { Photo } from "@/components/photo";
 import { ProjectCard } from "@/components/project-card";
 import { projectBySlug, projects } from "@/content/projects";
 
@@ -56,7 +57,7 @@ export default async function CaseStudyPage({ params }: PageProps) {
         </dl>
       </section>
       <div className="mx-auto max-w-[1200px] px-5 md:px-8">
-        <img src={project.studyImage} alt="" className="w-full object-cover" />
+        <Photo src={project.studyImage} alt="" className="w-full object-cover" />
       </div>
       <section className="mx-auto max-w-[1200px] px-5 py-16 md:px-8">
         <h2 className="label text-muted">Recent projects</h2>
