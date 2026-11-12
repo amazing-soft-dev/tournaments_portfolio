@@ -1,7 +1,9 @@
+import { Hero } from "@/components/hero";
+
 export default function HomePage() {
   return (
     <main>
-      <h1>Hammet</h1>
+      <Hero />
     </main>
   );
 }
