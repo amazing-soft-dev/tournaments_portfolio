@@ -1,3 +1,4 @@
+import { Photo } from "@/components/photo";
 import { RevealHeading } from "@/components/reveal-heading";
 import { SectionRail } from "@/components/section-rail";
 
@@ -13,8 +14,8 @@ export function About() {
           <h2 className="display text-[60px] tracking-[-2px] md:text-[72px] xl:text-[88px] xl:tracking-[-4.4px]">
             About me
           </h2>
-          <img
-            src="/images/portrait-about.jpg"
+          <Photo
+            src="/images/portrait-about-960.webp"
             alt="Hammet in profile"
             className="mt-8 aspect-[4/5] w-full object-cover"
           />
