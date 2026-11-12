@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
+import { Photo } from "@/components/photo";
 
 const ease = [0.37, 0.02, 0.31, 1] as const;
 
@@ -26,14 +27,17 @@ export function Hero() {
           Designing thoughtful websites and digital products focused on clarity, usability, and conversion.
         </p>
       </div>
-      <motion.img
-        src="/images/portrait-hero.jpg"
-        alt="Portrait of Hammet"
-        className="aspect-[4/5] w-full object-cover"
+      <motion.div
         initial={reduce ? false : { y: 320, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: reduce ? 0 : 0.9, ease }}
-      />
+      >
+        <Photo
+          src="/images/portrait-hero-960.webp"
+          alt="Portrait of Hammet"
+          className="aspect-[4/5] w-full object-cover"
+        />
+      </motion.div>
     </section>
   );
 }

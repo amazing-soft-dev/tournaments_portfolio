@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { Photo } from "@/components/photo";
 import { SectionRail } from "@/components/section-rail";
 import { services } from "@/content/services";
 
@@ -35,7 +36,7 @@ export function Services() {
             <div className="sticky top-6">
               <div className="relative aspect-[4/5] bg-line">
                 {services.map((service, index) => (
-                  <img
+                  <Photo
                     key={service.id}
                     src={service.image}
                     alt={index === active ? service.alt : ""}
@@ -56,7 +57,7 @@ export function Services() {
                 }}
                 className="border-t border-line py-12 xl:min-h-[720px]"
               >
-                <img
+                <Photo
                   src={service.image}
                   alt={service.alt}
                   className="mb-8 aspect-[4/5] w-full object-cover xl:hidden"

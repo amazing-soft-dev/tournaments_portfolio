@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ContactForm } from "@/components/contact-form";
+import { Photo } from "@/components/photo";
 
 export const metadata: Metadata = {
   title: "Contact - Hammet",
@@ -15,8 +16,8 @@ export default function ContactPage() {
           Have an idea or project in mind?
         </h1>
         <p className="mt-6 text-xl leading-[27.5px] text-body">Let’s talk and see if we’re a good fit.</p>
-        <img
-          src="/images/portrait-contact.jpg"
+        <Photo
+          src="/images/portrait-contact-960.webp"
           alt="Portrait of Hammet"
           className="mt-10 aspect-[4/5] w-full object-cover"
         />

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Photo } from "@/components/photo";
 import type { Project } from "@/content/projects";
 
 export function ProjectCard({
@@ -13,7 +14,7 @@ export function ProjectCard({
 
   return (
     <Link href={`/projects/${project.slug}`} className={`group block ${text}`}>
-      <img src={project.image} alt="" className={`w-full ${project.frame}`} />
+      <Photo src={project.image} alt="" className={`w-full ${project.frame}`} />
       <div className="mt-4 flex items-baseline justify-between">
         <span className="label">{project.name}</span>
         <span className="micro">{project.index}</span>
