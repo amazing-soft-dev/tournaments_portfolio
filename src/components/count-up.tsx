@@ -9,10 +9,7 @@ export function CountUp({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
-    if (reduce) {
-      setCurrent(value);
-      return;
-    }
+    if (reduce !== false) return;
     const node = ref.current;
     if (!node) return;
     let frame = 0;
@@ -39,9 +36,11 @@ export function CountUp({ value, suffix }: { value: number; suffix: string }) {
     };
   }, [reduce, value]);
 
+  const shown = reduce ? value : current;
+
   return (
     <span ref={ref}>
-      {current}
+      {shown}
       {suffix}
     </span>
   );
