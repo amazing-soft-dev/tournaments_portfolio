@@ -1,1 +1,63 @@
 @import "tailwindcss";
+
+@theme {
+  --color-ink: #1e1e1e;
+  --color-body: #333333;
+  --color-paper: #e4e6e7;
+  --color-slate: #697277;
+  --color-line: #d4d7d9;
+  --color-muted: #747e81;
+  --font-display: "General Sans", sans-serif;
+  --font-sans: var(--font-inter), "Inter", sans-serif;
+  --breakpoint-md: 50.625rem;
+  --breakpoint-xl: 75rem;
+}
+
+@layer base {
+  html {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    margin: 0;
+    background: var(--color-paper);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--color-ink);
+  }
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+}
+
+@utility label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+@utility micro {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 10px;
+  line-height: 15px;
+  text-transform: uppercase;
+}
