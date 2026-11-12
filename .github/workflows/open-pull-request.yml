@@ -1,0 +1,111 @@
+name: Open pull request
+
+on:
+  push:
+    branches:
+      - "feat/**"
+      - "fix/**"
+      - "docs/**"
+      - "ci/**"
+      - "build/**"
+      - dev
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          script: |
+            const prefix = /^(feat|fix|docs|ci|build)\/.+/;
+            const branch = context.ref.replace("refs/heads/", "");
+
+            async function findOpen(head, base) {
+              const { data } = await github.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                state: "open",
+                head: `${context.repo.owner}:${head}`,
+                base,
+              });
+              return data[0];
+            }
+
+            if (branch === "dev") {
+              const { data: comparison } = await github.rest.repos.compareCommitsWithBasehead({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                basehead: "main...dev",
+              });
+              if (comparison.ahead_by === 0) {
+                core.info("dev is not ahead of main");
+                return;
+              }
+              const issues = new Set();
+              const patterns = [
+                /(?:feat|fix|docs|ci|build)\/(\d+)-/g,
+                /(?:Closes|Fixes|Resolves)\s+#(\d+)/gi,
+              ];
+              for (const commit of comparison.commits) {
+                const message = commit.commit.message;
+                for (const pattern of patterns) {
+                  pattern.lastIndex = 0;
+                  for (const match of message.matchAll(pattern)) {
+                    issues.add(match[1]);
+                  }
+                }
+              }
+              const closes = [...issues]
+                .sort((left, right) => Number(left) - Number(right))
+                .map((number) => `Closes #${number}`)
+                .join("\n");
+              const body = ["## Summary", "", "Promote `dev` to `main`.", "", closes]
+                .filter((line) => line !== undefined)
+                .join("\n");
+              const existing = await findOpen("dev", "main");
+              if (existing) {
+                await github.rest.pulls.update({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  pull_number: existing.number,
+                  body,
+                });
+                core.info(`Updated pull request #${existing.number}`);
+                return;
+              }
+              const created = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: "dev",
+                base: "main",
+                title: "Promote dev to main",
+                body,
+              });
+              core.info(`Opened pull request #${created.data.number}`);
+              return;
+            }
+
+            if (!prefix.test(branch)) return;
+
+            const existing = await findOpen(branch, "dev");
+            if (existing) {
+              core.info(`Pull request #${existing.number} is already open`);
+              return;
+            }
+            const title = branch
+              .replace(/^(feat|fix|docs|ci|build)\/\d+-/, "")
+              .replaceAll("-", " ");
+            const created = await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: branch,
+              base: "dev",
+              title: title.charAt(0).toUpperCase() + title.slice(1),
+              body: `Automated pull request for \`${branch}\`.\n\nThis pull request targets \`dev\` and does not close issues.`,
+            });
+            core.info(`Opened pull request #${created.data.number}`);
