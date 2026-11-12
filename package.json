@@ -9,7 +9,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --max-warnings 0",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "check:images": "node scripts/check-images.mjs",
+    "build:static": "node scripts/build-static.mjs"
   },
   "dependencies": {
     "next": "16.4.6",
