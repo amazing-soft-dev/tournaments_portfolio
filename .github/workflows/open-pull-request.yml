@@ -100,12 +100,21 @@ jobs:
             const title = branch
               .replace(/^(feat|fix|docs|ci|build)\/\d+-/, "")
               .replaceAll("-", " ");
-            const created = await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              head: branch,
-              base: "dev",
-              title: title.charAt(0).toUpperCase() + title.slice(1),
-              body: `Automated pull request for \`${branch}\`.\n\nThis pull request targets \`dev\` and does not close issues.`,
-            });
-            core.info(`Opened pull request #${created.data.number}`);
+            try {
+              const created = await github.rest.pulls.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                head: branch,
+                base: "dev",
+                title: title.charAt(0).toUpperCase() + title.slice(1),
+                body: `Automated pull request for \`${branch}\`.\n\nThis pull request targets \`dev\` and does not close issues.`,
+              });
+              core.info(`Opened pull request #${created.data.number}`);
+            } catch (error) {
+              const message = error instanceof Error ? error.message : String(error);
+              if (message.includes("No commits between")) {
+                core.info(`${branch} is already contained in dev`);
+                return;
+              }
+              throw error;
+            }
